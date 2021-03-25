@@ -1,1 +1,2 @@
-# App-pets_Xamarin
+# AppPets
+Desarrollo Móvil Multiplataforma ULSA ISSC

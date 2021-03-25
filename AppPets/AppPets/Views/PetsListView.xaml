@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppPets.Views.PetsListView"
+             Title="AppPets">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Nuevo" Command="{Binding NewCommand}" />
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+
+        <StackLayout>
+            
+            <CollectionView 
+                x:Name="PetsList"
+                ItemsSource="{Binding PetsList}"
+                SelectionChangedCommand="{Binding SelectCommand}"
+                SelectedItem="{Binding PetSelected}"
+                SelectionMode="Single">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Image
+                            Grid.RowSpan="3"
+                            HeightRequest="50"
+                            Source="{Binding Picture}" />
+                            <Label 
+                            Grid.Column="2"
+                            Grid.Row="1"
+                            FontAttributes="Bold"
+                            Text="{Binding Name}" />
+                            <Label
+                            Grid.Column="2"
+                            Grid.Row="2"
+                            Text="{Binding Breed}" />
+                            <Label
+                            Grid.Column="2"
+                            Grid.Row="3"
+                            Text="{Binding Age, StringFormat='{0} años'}" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            
+        </StackLayout>
+
+    </ContentPage.Content>
+</ContentPage>

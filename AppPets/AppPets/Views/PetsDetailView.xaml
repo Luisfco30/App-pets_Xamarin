@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:triggers="clr-namespace:AppPets.Triggers"
+             x:Class="AppPets.Views.PetsDetailView"
+             Title="Detalle de la mascota">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Eliminar" Command="{Binding DeleteCommand}" />
+        <ToolbarItem Text="Guardar" Command="{Binding SaveCommand}" />
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+
+        <!--TableView
+            Intent="Form">
+            <TableView.Root>
+                <TableSection>
+                    <EntryCell x:Name="EntryName" Label="Nombre" Text="{Binding PetName}" />
+                    <EntryCell x:Name="EntryBreed" Label="Raza" Text="{Binding PetBreed}" />
+                    <EntryCell x:Name="EntryAge" Label="Edad" Keyboard="Numeric" Text="{Binding PetAge}" />
+                    <EntryCell x:Name="EntryPicture" Label="Url Imagen" Text="{Binding PetPicture}" />
+                    <ImageCell x:Name="ImagePicture" ImageSource="{Binding PetPicture}" />
+                </TableSection>
+            </TableView.Root>
+        </-->
+
+        <ScrollView>
+            <StackLayout>
+                <Entry 
+                    Placeholder="Nombre" 
+                    Text="{Binding PetName}" />
+                <Entry 
+                    Placeholder="Raza" 
+                    Text="{Binding PetBreed}" />
+                <Entry 
+                    Placeholder="Edad" 
+                    Keyboard="Numeric" 
+                    Text="{Binding PetAge}" >
+                    <Entry.Triggers>
+                        <EventTrigger 
+                            Event="TextChanged">
+                            <triggers:AgeTrigger />
+                        </EventTrigger>
+                    </Entry.Triggers>
+                </Entry>
+                <Stepper
+                    Increment="1"
+                    Minimum="0"
+                    Maximum="20"
+                    Value="{Binding PetAge}" />
+                <Entry
+                    Placeholder="Latitud"
+                    Text="{Binding PetLatitude}" />
+                <Entry
+                    Placeholder="Longitud"
+                    Text="{Binding PetLongitude}" />
+                <Button
+                    Text="Obtener coordenadas"
+                    Command="{Binding GetLocationCommand}" />
+                <Entry 
+                    Placeholder="Url Imagen" 
+                    Text="{Binding PetPicture}" />
+                <Image 
+                    Source="{Binding PetPicture}" />
+                <Button
+                    Text="Tomar fotografía"
+                    Command="{Binding TakePictureCommand}" />
+                <Button
+                    Text="Seleccionar fotografía"
+                    Command="{Binding SelectPictureCommand}" />
+            </StackLayout>
+        </ScrollView>
+
+    </ContentPage.Content>
+</ContentPage>
