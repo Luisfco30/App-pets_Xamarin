@@ -1,5 +1,6 @@
 ﻿using AppPets.Models;
 using AppPets.Services;
+using AppPets.Views;
 using Plugin.Media;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,9 @@ namespace AppPets.Viewmodels
 
         Command _DeleteCommand;
         public Command DeleteCommand => _DeleteCommand ?? (_DeleteCommand = new Command(DeleteAction));
+
+        Command _MapCommand;
+        public Command MapCommand => _MapCommand ?? (_MapCommand = new Command(MapAction));
 
         Command _GetLocationCommand;
         public Command GetLocationCommand=> _GetLocationCommand ?? (_GetLocationCommand = new Command(GetLocationAction));
@@ -102,6 +106,8 @@ namespace AppPets.Viewmodels
             PetBreed = pet.Breed;
             PetAge = pet.Age;
             PetPicture = pet.Picture;
+            PetLatitude = pet.Latitude;
+            PetLongitude = pet.Longitude;
         }
 
         private async void SaveAction()
@@ -144,7 +150,9 @@ namespace AppPets.Viewmodels
                     Name = PetName,
                     Breed = PetBreed,
                     Age = PetAge,
-                    Picture = PetPicture
+                    Picture = PetPicture,
+                    Latitude = PetLatitude,
+                    Longitude = PetLongitude
                 };
                 if(pet.ID > 0)
                 {
@@ -173,6 +181,22 @@ namespace AppPets.Viewmodels
             
         }
 
+
+        private void MapAction()
+        {
+            Application.Current.MainPage.Navigation.PushAsync(
+                new PetsMapsView(new PetModel {
+                    ID = _PetID,
+                    Name = PetName,
+                    Breed = PetBreed,
+                    Age = PetAge,
+                    Picture = PetPicture,
+                    Latitude = PetLatitude,
+                    Longitude = PetLongitude
+                })
+            );
+        }
+
          private async void DeleteAction()
         {
             ApiResponse response = null;
@@ -184,7 +208,9 @@ namespace AppPets.Viewmodels
                     Name = PetName,
                     Breed = PetBreed,
                     Age = PetAge,
-                    Picture = PetPicture
+                    Picture = PetPicture,
+                    Latitude = PetLatitude,
+                    Longitude = PetLongitude
                 };
                 if (pet.ID > 0)
                 {

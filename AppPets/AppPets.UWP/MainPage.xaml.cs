@@ -20,7 +20,7 @@ namespace AppPets.UWP
         public MainPage()
         {
             this.InitializeComponent();
-
+            Xamarin.FormsMaps.Init("AvzB88tjpMbRlM8O09tIgCAwvjhimA3-aowiZlE-2eEz70wIzFJ8pBWYAJTSM8Uz");
             LoadApplication(new AppPets.App());
         }
     }

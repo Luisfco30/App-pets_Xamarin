@@ -18,6 +18,10 @@ namespace WebApiPet.Models
 
         public string Picture { get; set; }
 
+        public double Latitude { get; set; }
+
+        public double Longitude { get; set; }
+
         public List <PetModel> GetAll (string connectionString)
         {
             List<PetModel> list = new List<PetModel>();
@@ -39,7 +43,9 @@ namespace WebApiPet.Models
                                     Name = reader["Name"].ToString(),
                                     Breed = reader["Breed"].ToString(),
                                     Age = int.Parse(reader["Age"].ToString()),
-                                    Picture = reader["Picture"].ToString()
+                                    Picture = reader["Picture"].ToString(),
+                                    Latitude = double.Parse(reader["Latitude"].ToString()),
+                                    Longitude = double.Parse(reader["Longitude"].ToString())
                                 });
                             }
                         }
@@ -75,7 +81,9 @@ namespace WebApiPet.Models
                                     Name = reader["Name"].ToString(),
                                     Breed = reader["Breed"].ToString(),
                                     Age = int.Parse(reader["Age"].ToString()),
-                                    Picture = reader["Picture"].ToString()
+                                    Picture = reader["Picture"].ToString(),
+                                    Latitude = double.Parse(reader["Latitude"].ToString()),
+                                    Longitude = double.Parse(reader["Longitude"].ToString())
                                 };
                             }
                         }
@@ -97,7 +105,7 @@ namespace WebApiPet.Models
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
-                    string tsq = "INSERT INTO Pet (Name, Breed, Age, Picture) VALUES(@Name,@Breed,@Age,@Picture); SELECT LAST_INSERT_ID();";
+                    string tsq = "INSERT INTO Pet (Name, Breed, Age, Picture, Latitude, Longitude) VALUES(@Name,@Breed,@Age,@Picture,@Latitude,@Longitude); SELECT LAST_INSERT_ID();";
                     using (MySqlCommand cmd = new MySqlCommand(tsq, conn))
                     {
                         cmd.CommandType = System.Data.CommandType.Text;
@@ -105,6 +113,9 @@ namespace WebApiPet.Models
                         cmd.Parameters.AddWithValue("@Breed", Breed);
                         cmd.Parameters.AddWithValue("Age", Age);
                         cmd.Parameters.AddWithValue("@Picture", Picture);
+                        cmd.Parameters.AddWithValue("@Latitude", Latitude);
+                        cmd.Parameters.AddWithValue("@Longitude", Longitude);
+
                         newID = cmd.ExecuteScalar();
                         if(newID !=null &&  newID.ToString().Length > 0)
                         {
@@ -146,7 +157,7 @@ namespace WebApiPet.Models
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
-                    string tsq = "UPDATE Pet SET Name=@Name, Breed=@Breed, Age=@Age, Picture=@Picture WHERE ID = @ID;";
+                    string tsq = "UPDATE Pet SET Name=@Name, Breed=@Breed, Age=@Age, Picture=@Picture, Latitude=@Latitude, Longitude=@Longitude WHERE ID = @ID;";
                     using (MySqlCommand cmd = new MySqlCommand(tsq, conn))
                     {
                         cmd.CommandType = System.Data.CommandType.Text;
@@ -154,6 +165,8 @@ namespace WebApiPet.Models
                         cmd.Parameters.AddWithValue("@Breed", Breed);
                         cmd.Parameters.AddWithValue("Age", Age);
                         cmd.Parameters.AddWithValue("@Picture", Picture);
+                        cmd.Parameters.AddWithValue("@Latitude", Latitude);
+                        cmd.Parameters.AddWithValue("@Longitude", Longitude);
                         cmd.Parameters.AddWithValue("@ID", ID);
                         newID = cmd.ExecuteNonQuery();
                        
