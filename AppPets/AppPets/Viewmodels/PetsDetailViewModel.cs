@@ -1,6 +1,7 @@
 ﻿using AppPets.Models;
 using AppPets.Services;
 using AppPets.Views;
+using AppTask2021.Services;
 using Plugin.Media;
 using System;
 using System.Collections.Generic;
@@ -70,11 +71,11 @@ namespace AppPets.Viewmodels
             set => SetProperty(ref _PetAge, value);
         }
 
-        string _PetPicture;
-        public string PetPicture
+        string imageBase64;
+        public string ImageBase64
         {
-            get => _PetPicture;
-            set => SetProperty(ref _PetPicture, value);
+            get => imageBase64;
+            set => SetProperty(ref imageBase64, value);
         }
 
         double _PetLatitude;
@@ -91,9 +92,25 @@ namespace AppPets.Viewmodels
             set => SetProperty(ref _PetLongitude, value);
         }
 
+        PetModel petSelected;
+        public PetModel PetSelected
+        {
+            get => petSelected;
+            set => SetProperty(ref petSelected, value);
+        }
+
         public PetsDetailViewModel(PetsViewModel petsViewModel)
         {
             PetsViewModel = petsViewModel;
+        }
+        public PetsDetailViewModel()
+        {
+            PetSelected = new PetModel();
+        }
+        public PetsDetailViewModel(PetModel petSelected)
+        {
+            PetSelected = petSelected;
+            ImageBase64 = petSelected.ImageBase64;
         }
 
         public PetsDetailViewModel(PetsViewModel petsViewModel, PetModel pet)
@@ -105,7 +122,7 @@ namespace AppPets.Viewmodels
             PetName = pet.Name;
             PetBreed = pet.Breed;
             PetAge = pet.Age;
-            PetPicture = pet.Picture;
+            imageBase64 = pet.ImageBase64;
             PetLatitude = pet.Latitude;
             PetLongitude = pet.Longitude;
         }
@@ -150,7 +167,7 @@ namespace AppPets.Viewmodels
                     Name = PetName,
                     Breed = PetBreed,
                     Age = PetAge,
-                    Picture = PetPicture,
+                    ImageBase64 = imageBase64,
                     Latitude = PetLatitude,
                     Longitude = PetLongitude
                 };
@@ -190,7 +207,7 @@ namespace AppPets.Viewmodels
                     Name = PetName,
                     Breed = PetBreed,
                     Age = PetAge,
-                    Picture = PetPicture,
+                    ImageBase64 = imageBase64,
                     Latitude = PetLatitude,
                     Longitude = PetLongitude
                 })
@@ -208,7 +225,7 @@ namespace AppPets.Viewmodels
                     Name = PetName,
                     Breed = PetBreed,
                     Age = PetAge,
-                    Picture = PetPicture,
+                    ImageBase64 = imageBase64,
                     Latitude = PetLatitude,
                     Longitude = PetLongitude
                 };
@@ -292,14 +309,8 @@ namespace AppPets.Viewmodels
                 if (file == null)
                     return;
 
-                PetPicture = file.Path;
+                imageBase64 = ImageBase64 = await new ImageService().ConvertImageFilePathToBase64(file.Path);
 
-                //await DisplayAlert("File Location", file.Path, "OK");
-                /*image.Source = ImageSource.FromStream(() =>
-                {
-                    var stream = file.GetStream();
-                    return stream;
-                });*/
             }
             catch (Exception ex)
             {
@@ -327,14 +338,10 @@ namespace AppPets.Viewmodels
                 if (file == null)
                     return;
 
-                PetPicture = file.Path;
+                imageBase64= ImageBase64 = await new ImageService().ConvertImageFilePathToBase64(file.Path);
 
-                //await DisplayAlert("File Location", file.Path, "OK");
-                /*image.Source = ImageSource.FromStream(() =>
-                {
-                    var stream = file.GetStream();
-                    return stream;
-                });*/
+       
+
             }
             catch (Exception ex)
             {

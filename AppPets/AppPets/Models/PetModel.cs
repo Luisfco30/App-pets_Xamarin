@@ -14,7 +14,7 @@ namespace AppPets.Models
 
         public int Age { get; set; }
 
-        public string Picture { get; set; }
+        public string ImageBase64 { get; set; }
 
         public double Latitude { get; set; }
 

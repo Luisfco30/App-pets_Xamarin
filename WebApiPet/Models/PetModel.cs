@@ -16,7 +16,7 @@ namespace WebApiPet.Models
 
         public int Age { get; set; }
 
-        public string Picture { get; set; }
+        public string ImageBase64 { get; set; }
 
         public double Latitude { get; set; }
 
@@ -43,7 +43,7 @@ namespace WebApiPet.Models
                                     Name = reader["Name"].ToString(),
                                     Breed = reader["Breed"].ToString(),
                                     Age = int.Parse(reader["Age"].ToString()),
-                                    Picture = reader["Picture"].ToString(),
+                                    ImageBase64 = reader["ImageBase64"].ToString(),
                                     Latitude = double.Parse(reader["Latitude"].ToString()),
                                     Longitude = double.Parse(reader["Longitude"].ToString())
                                 });
@@ -81,7 +81,7 @@ namespace WebApiPet.Models
                                     Name = reader["Name"].ToString(),
                                     Breed = reader["Breed"].ToString(),
                                     Age = int.Parse(reader["Age"].ToString()),
-                                    Picture = reader["Picture"].ToString(),
+                                    ImageBase64 = reader["ImageBase64"].ToString(),
                                     Latitude = double.Parse(reader["Latitude"].ToString()),
                                     Longitude = double.Parse(reader["Longitude"].ToString())
                                 };
@@ -105,14 +105,14 @@ namespace WebApiPet.Models
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
-                    string tsq = "INSERT INTO Pet (Name, Breed, Age, Picture, Latitude, Longitude) VALUES(@Name,@Breed,@Age,@Picture,@Latitude,@Longitude); SELECT LAST_INSERT_ID();";
+                    string tsq = "INSERT INTO Pet (Name, Breed, Age, ImageBase64, Latitude, Longitude) VALUES(@Name,@Breed,@Age,@ImageBase64,@Latitude,@Longitude); SELECT LAST_INSERT_ID();";
                     using (MySqlCommand cmd = new MySqlCommand(tsq, conn))
                     {
                         cmd.CommandType = System.Data.CommandType.Text;
                         cmd.Parameters.AddWithValue("@Name", Name);
                         cmd.Parameters.AddWithValue("@Breed", Breed);
                         cmd.Parameters.AddWithValue("Age", Age);
-                        cmd.Parameters.AddWithValue("@Picture", Picture);
+                        cmd.Parameters.AddWithValue("@ImageBase64", ImageBase64);
                         cmd.Parameters.AddWithValue("@Latitude", Latitude);
                         cmd.Parameters.AddWithValue("@Longitude", Longitude);
 
@@ -157,14 +157,14 @@ namespace WebApiPet.Models
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
-                    string tsq = "UPDATE Pet SET Name=@Name, Breed=@Breed, Age=@Age, Picture=@Picture, Latitude=@Latitude, Longitude=@Longitude WHERE ID = @ID;";
+                    string tsq = "UPDATE Pet SET Name=@Name, Breed=@Breed, Age=@Age, ImageBase64=@ImageBase64, Latitude=@Latitude, Longitude=@Longitude WHERE ID = @ID;";
                     using (MySqlCommand cmd = new MySqlCommand(tsq, conn))
                     {
                         cmd.CommandType = System.Data.CommandType.Text;
                         cmd.Parameters.AddWithValue("@Name", Name);
                         cmd.Parameters.AddWithValue("@Breed", Breed);
                         cmd.Parameters.AddWithValue("Age", Age);
-                        cmd.Parameters.AddWithValue("@Picture", Picture);
+                        cmd.Parameters.AddWithValue("@ImageBase64", ImageBase64);
                         cmd.Parameters.AddWithValue("@Latitude", Latitude);
                         cmd.Parameters.AddWithValue("@Longitude", Longitude);
                         cmd.Parameters.AddWithValue("@ID", ID);

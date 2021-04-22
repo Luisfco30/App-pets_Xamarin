@@ -1,8 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+         xmlns:converters="clr-namespace:AppTask2021.Converters"
              x:Class="AppPets.Views.PetsListView"
              Title="AppPets">
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ImageConverter x:Key="ImageConverters"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Nuevo" Command="{Binding NewCommand}" />
@@ -33,7 +41,7 @@
                             <Image
                             Grid.RowSpan="3"
                             HeightRequest="50"
-                            Source="{Binding Picture}" />
+                            Source="{Binding ImageBase64,Converter={StaticResource ImageConverters}}" />
                             <Label 
                             Grid.Column="2"
                             Grid.Row="1"

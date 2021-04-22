@@ -2,9 +2,15 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:triggers="clr-namespace:AppPets.Triggers"
+             xmlns:converters="clr-namespace:AppTask2021.Converters"
              x:Class="AppPets.Views.PetsDetailView"
              Title="Detalle de la mascota">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ImageConverter x:Key="ImageConverters"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Eliminar" Command="{Binding DeleteCommand}" />
         <ToolbarItem Text="Guardar" Command="{Binding SaveCommand}" />
@@ -61,9 +67,9 @@
                     Command="{Binding GetLocationCommand}" />
                 <Entry 
                     Placeholder="Url Imagen" 
-                    Text="{Binding PetPicture}" />
+                    Text="{Binding ImageBase64}" />
                 <Image 
-                    Source="{Binding PetPicture}" />
+                    Source="{Binding ImageBase64,Converter={StaticResource ImageConverters}}" />
                 <Button
                     Text="Tomar fotografía"
                     Command="{Binding TakePictureCommand}" />
