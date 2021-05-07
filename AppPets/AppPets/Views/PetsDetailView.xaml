@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:triggers="clr-namespace:AppPets.Triggers"
              xmlns:converters="clr-namespace:AppTask2021.Converters"
+             xmlns:renders="clr-namespace:AppPets.Renders"
              x:Class="AppPets.Views.PetsDetailView"
              Title="Detalle de la mascota">
 
@@ -76,6 +77,8 @@
                 <Button
                     Text="Seleccionar fotografía"
                     Command="{Binding SelectPictureCommand}" />
+                <renders:MyEntry
+                    Text="Prueva de render"/>
             </StackLayout>
         </ScrollView>
 

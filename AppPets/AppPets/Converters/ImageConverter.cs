@@ -11,7 +11,10 @@ namespace AppTask2021.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(value == null || string.IsNullOrEmpty(value.ToString()))return null;
+            if (value == null || string.IsNullOrEmpty(value.ToString()))
+            {
+                return "image_not_found.png";
+            }
 
             return new ImageService().ConvertImageFromBase64ToImageSource(value.ToString());
         }

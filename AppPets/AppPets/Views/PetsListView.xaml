@@ -19,47 +19,49 @@
     <ContentPage.Content>
 
         <StackLayout>
-            
-            <CollectionView 
-                x:Name="PetsList"
-                ItemsSource="{Binding PetsList}"
-                SelectionChangedCommand="{Binding SelectCommand}"
-                SelectedItem="{Binding PetSelected}"
-                SelectionMode="Single">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="50" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Image
-                            Grid.RowSpan="3"
-                            HeightRequest="50"
-                            Source="{Binding ImageBase64,Converter={StaticResource ImageConverters}}" />
-                            <Label 
-                            Grid.Column="2"
-                            Grid.Row="1"
-                            FontAttributes="Bold"
-                            Text="{Binding Name}" />
-                            <Label
-                            Grid.Column="2"
-                            Grid.Row="2"
-                            Text="{Binding Breed}" />
-                            <Label
-                            Grid.Column="2"
-                            Grid.Row="3"
-                            Text="{Binding Age, StringFormat='{0} años'}" />
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-            
+            <RefreshView
+                IsRefreshing="{Binding IsBusy}"
+                Command="{Binding RefreshCommand}">
+                <CollectionView 
+                        x:Name="PetsList"
+                        ItemsSource="{Binding PetsList}"
+                        SelectionChangedCommand="{Binding SelectCommand}"
+                        SelectedItem="{Binding PetSelected}"
+                        SelectionMode="Single">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Image
+                                    Grid.RowSpan="3"
+                                    HeightRequest="50"
+                                    Source="{Binding ImageBase64,Converter={StaticResource ImageConverters}}" />
+                                <Label 
+                                    Grid.Column="2"
+                                    Grid.Row="1"
+                                    FontAttributes="Bold"
+                                    Text="{Binding Name}" />
+                                <Label
+                                    Grid.Column="2"
+                                    Grid.Row="2"
+                                    Text="{Binding Breed}" />
+                                <Label
+                                    Grid.Column="2"
+                                    Grid.Row="3"
+                                    Text="{Binding Age, StringFormat='{0} años'}" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
         </StackLayout>
 
     </ContentPage.Content>

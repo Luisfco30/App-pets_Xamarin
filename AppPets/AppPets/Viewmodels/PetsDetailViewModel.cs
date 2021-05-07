@@ -231,7 +231,7 @@ namespace AppPets.Viewmodels
                 };
                 if (pet.ID > 0)
                 {
-                    response = await new ApiService().DeleteDataAsync("Pets",pet,pet.ID);
+                    response = await new ApiService().DeleteDataAsync("Pets",pet.ID);
                 }
                 if (response == null || !response.IsSucces)
                 {

@@ -1,4 +1,5 @@
 ﻿using AppPets.Models;
+using AppTask2021.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +19,12 @@ namespace AppPets.Views
         {
             InitializeComponent();
 
-            MapPets.MoveToRegion(
+            petSelected.ImageBase64 = new ImageService().SaveImageFromBase64(petSelected.ImageBase64, petSelected.ID);
 
+
+            MapPets.Pet = petSelected;
+
+            MapPets.MoveToRegion(
                 MapSpan.FromCenterAndRadius(
                     new Position(
                         petSelected.Latitude,

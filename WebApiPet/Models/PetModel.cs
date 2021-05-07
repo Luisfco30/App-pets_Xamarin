@@ -22,7 +22,7 @@ namespace WebApiPet.Models
 
         public double Longitude { get; set; }
 
-        public List <PetModel> GetAll (string connectionString)
+        public ApiResponse GetAll (string connectionString)
         {
             List<PetModel> list = new List<PetModel>();
             try
@@ -51,14 +51,25 @@ namespace WebApiPet.Models
                         }
                     }
                  }
+                return new ApiResponse
+                {
+                    IsSucces = true,
+                    Message = "Las mascota fueron obtenidas correctamente",
+                    Result = list
+                };
             }
-            catch(Exception)
+            catch (Exception ex)
             {
-                return null;
+                return new ApiResponse
+                {
+                    IsSucces = false,
+                    Message = $"Se genero un error al consultar las mascotas ({ex.Message})",
+                    Result = null
+                };
             }
-            return list;
+
         }
-        public PetModel Get(string connectionString, int id)
+        public ApiResponse Get(string connectionString, int id)
         {
             PetModel obj = new PetModel();
             try
@@ -89,12 +100,22 @@ namespace WebApiPet.Models
                         }
                     }
                 }
+                return new ApiResponse
+                {
+                    IsSucces = true,
+                    Message = "La mascota fue obtenida correctamente",
+                    Result = obj
+                };
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                return new ApiResponse
+                {
+                    IsSucces = false,
+                    Message = $"Se genero un error al consultar la mascotas ({ex.Message})",
+                    Result = null
+                };
             }
-            return obj;
         }
 
         public ApiResponse Insert(string connectionString)

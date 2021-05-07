@@ -1,6 +1,7 @@
 ﻿using AppPets.Models;
 using AppPets.Services;
 using AppPets.Views;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,6 +16,10 @@ namespace AppPets.Viewmodels
 
         Command _SelectCommand;
         public Command SelectCommand => _SelectCommand ?? (_SelectCommand = new Command(SelectAction));
+
+        Command _RefreshCommand;
+        public Command RefreshCommand => _RefreshCommand ?? (_RefreshCommand = new Command(LoadPets));
+
 
         List<PetModel> _PetsList;
         public List<PetModel> PetsList
@@ -66,13 +71,16 @@ namespace AppPets.Viewmodels
 
         private async void LoadPets()
         {
-            ApiResponse response = await new ApiService().GetDataAsync<PetModel>("Pets");
+            IsBusy = true;
+            ApiResponse response = await new ApiService().GetDataAsync("Pets");
             if (response == null || !response.IsSucces)
             {
+                IsBusy = false;
                 await Application.Current.MainPage.DisplayAlert("AppPets", $"Error al cargar los viajes{response.Message}", "Ok");
                 return;
             }
-            PetsList = (List <PetModel>) response.Result;
+            PetsList = JsonConvert.DeserializeObject<List<PetModel>> (response.Result.ToString());
+            IsBusy = false;
         }
 
         public void PetsRefresh()

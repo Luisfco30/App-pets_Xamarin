@@ -22,14 +22,14 @@ namespace WebApiPet.Controllers
 
         // GET: api/<PetsController>
         [HttpGet]
-        public List<PetModel> Get()
+        public ApiResponse Get()
         {
             return new PetModel().GetAll(Configuration.GetConnectionString("MySQL"));
         }
 
         // GET <PetsController>/5
         [HttpGet("{id}/{nombre}")]
-        public PetModel Get(int id, string nombre)
+        public ApiResponse Get(int id, string nombre)
         {
             return new PetModel().Get(Configuration.GetConnectionString("MySQL"),id);
         }

@@ -10,10 +10,10 @@ namespace AppPets.Services
 {
     public class ApiService
     {
-        public string ApiUrl = "http://localhost/WebApiPet/";
+        public string ApiUrl = "http://192.168.1.70/WebApiPet/";
 
 
-        public async Task<ApiResponse> GetDataAsync<T>(string controller)
+        public async Task<ApiResponse> GetDataAsync(string controller)
         {
             try
             {
@@ -33,20 +33,14 @@ namespace AppPets.Services
                     };
                 }
 
-                var data = JsonConvert.DeserializeObject<List<T>>(result);
-                return new ApiResponse
-                {
-                    IsSucces = true,
-                    Message = "Los datos se obtuvieron de manera correcta",
-                    Result = data
-                };
+                return JsonConvert.DeserializeObject<ApiResponse>(result);
             }
-            catch(Exception)
+            catch (Exception ex)
             {
                 return new ApiResponse
                 {
                     IsSucces = false,
-                    Message = "Error al obtener datos"
+                    Message = ex.Message
                 };
             }
         }
@@ -119,12 +113,10 @@ namespace AppPets.Services
             }
         }
 
-        public async Task<ApiResponse> DeleteDataAsync(string controller, object data, int id)
+        public async Task<ApiResponse> DeleteDataAsync(string controller, int id)
         {
             try
             {
-                var serializeData = JsonConvert.SerializeObject(data);
-                var content = new StringContent(serializeData, Encoding.UTF8, "application/json");
                 var client = new HttpClient
                 {
                     BaseAddress = new System.Uri(ApiUrl)
