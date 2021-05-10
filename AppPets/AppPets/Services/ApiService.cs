@@ -10,7 +10,7 @@ namespace AppPets.Services
 {
     public class ApiService
     {
-        public string ApiUrl = "http://192.168.1.70/WebApiPet/";
+        public string ApiUrl = "http://impetec.ddns.net:14/WebApiPet/"; //"http://192.168.1.70/WebApiPet/";
 
 
         public async Task<ApiResponse> GetDataAsync(string controller)
